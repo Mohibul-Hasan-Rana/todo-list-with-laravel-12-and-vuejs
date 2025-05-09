@@ -34,4 +34,12 @@ class TaskRepository implements TaskRepositoryInterface
     {
         return $task->delete();
     }
+
+    public function toggle(Task $task)
+    {
+        $task->completed = !$task->completed;
+        $task->save();
+        return $task;
+    }
+   
 }

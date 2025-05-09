@@ -33,4 +33,9 @@ class TaskService
     {
         return $this->taskRepository->delete($task);
     }
+
+    public function toggle(Task $task)
+    {
+        return $this->taskRepository->toggle($task);
+    }
 }

@@ -1,0 +1,46 @@
+import { defineStore } from 'pinia';
+import axios from 'axios';
+import { useAuthStore } from './authStore';
+
+export const useTaskStore = defineStore('task', {
+  state: () => ({
+    tasks: [],
+  }),
+  actions: {
+    async fetchTasks() {
+      const authStore = useAuthStore();
+      const response = await axios.get('/api/tasks', {
+        headers: { Authorization: `Bearer ${authStore.token}` },
+      });
+      this.tasks = response.data;
+    },
+    async addTask(task) {
+      const authStore = useAuthStore();
+      const response = await axios.post('/api/tasks', task, {
+        headers: { Authorization: `Bearer ${authStore.token}` },
+      });
+      this.tasks.push(response.data);
+    },
+    async updateTask(updatedTask) {
+      const authStore = useAuthStore();
+      await axios.put(`/api/tasks/${updatedTask.id}`, updatedTask, {
+        headers: { Authorization: `Bearer ${authStore.token}` },
+      });
+      this.fetchTasks();
+    },
+    async deleteTask(taskId) {
+      const authStore = useAuthStore();
+      await axios.delete(`/api/tasks/${taskId}`, {
+        headers: { Authorization: `Bearer ${authStore.token}` },
+      });
+      this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    },
+    async toggleCompleted(task) {
+      const authStore = useAuthStore();
+      await axios.patch(`/api/tasks/${task.id}/toggle`, {}, {
+        headers: { Authorization: `Bearer ${authStore.token}` },
+      });
+      this.fetchTasks();
+    },
+  },
+});

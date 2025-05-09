@@ -46,4 +46,10 @@ class TaskController extends Controller
         $this->taskService->delete($task);
         return response()->json(['message' => 'Task deleted successfully.']);
     }
+
+    public function toggle(Request $request, Task $task)
+    {   
+        $this->authorize('update', $task);
+        return response()->json($this->taskService->toggle($task));
+    }
 }
