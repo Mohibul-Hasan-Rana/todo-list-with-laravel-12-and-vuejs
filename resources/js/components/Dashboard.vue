@@ -19,7 +19,49 @@
           @delete-task="openDeleteModal"
           @toggle-completed="toggleCompleted"
         />
+
+
+        <div class="flex justify-between items-center mt-4">
+          <!-- Left: Showing X of Y -->
+          <div class="text-gray-700">
+            Showing {{ startItem }} to {{ endItem }} of {{ total }}
+          </div>
+
+          <!-- Right: Pagination Buttons -->
+          <div class="flex items-center gap-2">
+            <button
+              @click="fetchTasks(currentPage - 1)"
+              :disabled="currentPage === 1"
+              :class="[
+                'px-3 py-1 rounded',
+                currentPage === 1 ? 'bg-gray-200 cursor-not-allowed' : 'bg-gray-300 hover:bg-gray-400 cursor-pointer'
+              ]"
+            >
+              Prev
+            </button>
+
+            <span class="px-4 py-1 text-gray-700">Page {{ currentPage }} of {{ lastPage }}</span>
+
+            <button
+              @click="fetchTasks(currentPage + 1)"
+              :disabled="currentPage === lastPage"
+              :class="[
+                'px-3 py-1 rounded',
+                currentPage === lastPage ? 'bg-gray-200 cursor-not-allowed' : 'bg-gray-300 hover:bg-gray-400 cursor-pointer'
+              ]"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+
+
+
       </div>
+
+      
+    
+      
       <div v-else class="text-gray-500 text-center">No task found.</div>
   
       <TaskModal
@@ -67,6 +109,22 @@
   const editTask = ref({});
   const deleteTaskId = ref(null);
   const toastMessage = ref('');
+  const currentPage = computed(() => taskStore.currentPage);
+  const lastPage = computed(() => taskStore.lastPage);
+  const total = computed(() => taskStore.total);
+
+  const fetchTasks = (page) => {    
+    taskStore.fetchTasks(page);
+  };
+
+  const startItem = computed(() => {
+    return (currentPage.value - 1) * taskStore.perPage + 1;
+  });
+
+  const endItem = computed(() => {
+    const calculatedEnd = currentPage.value * taskStore.perPage;
+    return calculatedEnd > taskStore.total ? taskStore.total : calculatedEnd;
+  });
   
   const showToast = (message) => {
     toastMessage.value = message;
@@ -119,7 +177,7 @@
   };
   
   onMounted(() => {
-    taskStore.fetchTasks();
+    taskStore.fetchTasks(currentPage.value);
   });
   
   const tasks = computed(() => taskStore.tasks);
