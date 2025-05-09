@@ -28,7 +28,7 @@ export const useTaskStore = defineStore('task', {
       const response = await axios.post('/api/tasks', task, {
         headers: { Authorization: `Bearer ${authStore.token}` },
       });
-      this.tasks.push(response.data);
+      await this.fetchTasks(this.currentPage);
     },
     async updateTask(updatedTask) {
       const authStore = useAuthStore();
@@ -42,7 +42,8 @@ export const useTaskStore = defineStore('task', {
       await axios.delete(`/api/tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${authStore.token}` },
       });
-      this.tasks = this.tasks.filter((task) => task.id !== taskId);
+      await this.fetchTasks(this.currentPage);
+      //this.tasks = this.tasks.filter((task) => task.id !== taskId);
     },
     async toggleCompleted(task) {
       const authStore = useAuthStore();
