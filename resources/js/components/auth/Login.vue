@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 flex justify-center items-center">
+    <div class="bg-gray-100 flex justify-center items-center mt-20">
       <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
         <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
         <div

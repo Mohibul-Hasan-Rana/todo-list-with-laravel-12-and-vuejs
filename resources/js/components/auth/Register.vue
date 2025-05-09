@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center items-center  bg-gray-100">
+    <div class="flex justify-center items-center  bg-gray-100 mt-20">
       <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-2xl font-bold text-center text-gray-700 mb-6">Register</h2>
         <div

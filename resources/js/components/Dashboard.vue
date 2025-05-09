@@ -1,5 +1,5 @@
 <template>
-    <div class="p-6 max-w-3xl mx-auto">
+    <div class="p-6 max-w-3xl mx-auto mt-10">
       <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Dashboard</h2>
   
       <div class="flex justify-between mb-6">
