@@ -39,4 +39,6 @@ This application is a Task Manager built with Laravel12 and VueJS, designed to h
 
  3. If php artisan serve not working then run this command ```php -S localhost:9000 -t public```
 
- 4. Paste this URL in browser: http://localhost:9000
+ 4. In another terminal run: ```npm install``` and ```npm run dev```
+
+ 5. Paste this URL in browser: http://localhost:9000
