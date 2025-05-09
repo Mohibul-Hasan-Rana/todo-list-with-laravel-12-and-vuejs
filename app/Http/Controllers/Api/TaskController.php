@@ -31,7 +31,7 @@ class TaskController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = $request->user()->id;
-        return response()->json($this->taskService->store($data));
+        return response()->json($this->taskService->store($data), 201);
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
@@ -44,7 +44,7 @@ class TaskController extends Controller
     {
         $this->authorize('delete', $task);
         $this->taskService->delete($task);
-        return response()->json(['message' => 'Task deleted successfully.']);
+        return response()->noContent();
     }
 
     public function toggle(Request $request, Task $task)
