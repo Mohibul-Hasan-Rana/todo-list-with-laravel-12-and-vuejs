@@ -2,21 +2,26 @@
 
 namespace App\Providers;
 
+use App\Interfaces\TaskRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Task;
+use App\Policies\TaskPolicy;
+use App\Repositories\TaskRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
+
+    protected $policies = [
+        Task::class => TaskPolicy::class,
+    ];
+
+   
     public function register(): void
     {
-        //
+        $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     */
+    
     public function boot(): void
     {
         //
